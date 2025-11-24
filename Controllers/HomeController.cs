@@ -3,15 +3,45 @@ using Microsoft.AspNetCore.Http;
 
 namespace aspCoreApiPractice.Controllers
 {
+    public struct CreateProductRequestDto
+    {
+        // [Required]를 쓰면, Id만 필수필드.
+        // 나머지도 똑같이 적용하고 싶다면 전부 어노테이션을 붙이기
+        // [Required]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+    }
+
     [Route("/APIExample")]
     [ApiController]
     public class HomeController : ControllerBase
     {
-        [Route("Hello")]
+        [Route("Hello")] // /APIExample/Hello?name=Cornch
         [HttpGet]
-        public string Index()
+        public string Hello(string? name)
         {
-            return "HELLO, WORLD!";
+            return $"HELLO, {name}"; // Hello, Cornch
+        }
+        // [HTTPGet]을 빼고, public string GetHello()로 작성하는 것도 되나,
+        // swagger gen이 깨져버림.
+        // body string 전체를 받고 싶으면, public string Hello([FromBody] string? name)
+
+
+        // 기본적으로 Body Param은 Optional 설정이 기본
+        // 필수로 하고싶다면, 구조체 필드 위에 [Required] 어노테이션 쓰기
+        [Route("Product")]
+        [HttpPost]
+        public string CreateProduct([FromBody] CreateProductRequestDto dto)
+        {
+            return $"Product: {dto.Id}, {dto.Name}, {dto.Price}";
+        }
+
+        [Route("Header")]
+        [HttpGet]
+        public string HelloHeader([FromHeader(Name = "user-agent")] string userAgent, [FromQuery] string name)
+        {
+            return $"{userAgent}: Hello, {name}";
         }
     }
 }

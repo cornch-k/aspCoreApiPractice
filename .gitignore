@@ -1,4 +1,43 @@
-/appsettings.Development.json
-/appsettings.json
-/bin
-/obj
+# 빌드 결과물 - 가장 중요한 제외 항목입니다
+bin/
+obj/
+
+# Visual Studio 관련 - IDE의 개인 설정 파일들입니다
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code 관련 - 개인 설정은 제외하되 공유 설정은 선택적입니다
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# NuGet 패키지들 - 이것들은 복원 가능하므로 제외합니다
+*.nupkg
+*.snupkg
+packages/
+
+# 테스트 결과 - 테스트를 실행할 때마다 새로 생성됩니다
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# 환경별 설정 파일 - 민감한 정보가 들어갈 수 있습니다
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+
+# 운영체제 관련 - Mac을 사용하시니 특히 중요합니다
+.DS_Store
+Thumbs.db
+
+# 로그 파일들 - 실행 중 생성되는 로그는 제외합니다
+*.log
+
+# 데이터베이스 파일들 - 로컬 개발용 DB는 제외합니다
+*.db
+*.db-shm
+*.db-wal
