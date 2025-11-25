@@ -43,5 +43,44 @@ namespace aspCoreApiPractice.Controllers
         {
             return $"{userAgent}: Hello, {name}";
         }
+
+        [Route("IActionResult")]
+        [HttpGet]
+        // IActionResult ActionResultTest()를 해도 되지만,
+        // 문서화가 힘들기 때문에 redirect를 받는게 아니라면 ActionResult<T>를 쓰는게 더 좋다.
+        public ActionResult<TestResponse> ActionResultTest()
+        {
+            var response = new TestResponse();
+            response.Buldak = "bokkeummyeon";
+            response.price = 13000;
+
+            return Ok(response);
+        }
+
+        [Route("StatudCode")]
+        [HttpGet]
+        public ActionResult<TestResponse> StatusCodeTest()
+        {
+            var response = new TestResponse();
+            response.Buldak = "bokkeummyeon";
+            response.price = 13000;
+
+            // return StatusCode(Code, return값)을 하면 커스텀 상태 코드를 반환가능.
+            return StatusCode(404, response);
+        }
+
+        [Route("Redirect")]
+        [HttpGet]
+        // Redirect를 할 때에는 IActionResult를 써서 어떤거든 return 받을 수 있게 하는게 편함.
+        public IActionResult RedirectTest()
+        {
+            var response = new TestResponse();
+            response.Buldak = "samyang";
+            response.price = 130000;
+
+            return Redirect("/APIExample/Hello?name=test");
+            // https://naver.com으로 하니까 200은 뜨지만 TypeError: Load failed를 반환한다.
+            // 공부중인 로컬호스트 주소로 바꾸니까 제대로 동작함
+        }
     }
 }
